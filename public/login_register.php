@@ -1,7 +1,5 @@
 <?php
     session_start();
-    require_once __DIR__ . '/../config.php';
-    require_once __DIR__ . '/login_register_backend.php';
 
     $errors = [
         'login' => $_SESSION['login_error'] ?? "",
@@ -14,19 +12,19 @@
 
     $activeForm = $_SESSION['active_form'] ?? 'login';
 
-    unset($_SESSION['login_error'], $_SESSION['register_error'], $_SESSION['register_success'], $_SESSION['active_form']);
+    session_unset();
 
-function showError($error){
-    return !empty($error) ? "<p class='error-message'>$error</p>" : "";
-}
+    function showError($error){
+        return !empty($error) ? "<p class='error-message'>$error</p>" : "";
+    }
 
-function showSuccess($success){
-    return !empty($success) ? "<p class='success-message'>$success</p>" : "";
-}
+    function showSuccess($success){
+        return !empty($success) ? "<p class='success-message'>$success</p>" : "";
+    }
 
-function isActiveForm($formName, $activeForm){
-    return $formName === $activeForm ? 'active' : "";
-}
+    function isActiveForm($formName, $activeForm){
+        return $formName === $activeForm ? 'active' : "";
+    }
 ?>
 
 
@@ -35,7 +33,7 @@ function isActiveForm($formName, $activeForm){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
     <title>index</title>
 </head>
 <body>
@@ -62,7 +60,7 @@ function isActiveForm($formName, $activeForm){
                 <?php echo showSuccess($success['register']); ?>
 
                 <input type="text" name="phonenumber" placeholder="Enter cellphone number" required>
-                <input type="password" name="password" placeholder="Create a new password" required>
+                <input type="password" name="password" placeholder="Enter your password" required>
                 <input type="password" name="confirm_password" placeholder="Confirm your password" required>
                 <select name="role" required>
                     <option value="">--Select Role--</option>
