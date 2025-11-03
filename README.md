@@ -9,6 +9,6 @@ Basic Crime Reporting Web App
    git clone https://github.com/PushkaZA/CrimeReportProject
    cd CrimeReportProject
    composer install
-3. Visit: http://localhost/CrimeReportProject
+3. Visit: http://localhost/GitHub/CrimeReportProject/index.php
 
 DONE! See the red "CRIME REPORT SYSTEM" page!
