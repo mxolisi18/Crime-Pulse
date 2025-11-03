@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body {
+    min-height: 100vh;
+    color: #333;
+    margin-top: 100px;
+}
+
+.top-header {
+  width: 100%;
+  background-color: #6a6cb8;
+  color: white;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.top-header ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.left-links, .right-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.top-header li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.top-header li:hover {
+  color: #3a3b3b;
+}
+
+.top-header a {
+  color: white;
+  text-decoration: none;
+}
+
+.top-header a:hover {
+  color: #303030;
+}
+
+.container {
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 30px 40px;
+  background: #eaeaec;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+form h2 {
+  color: #6a6cb8;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+form select,
+form input[type="text"],
+form input[type="date"],
+form input[type="file"],
+form textarea {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f5fff7;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.3s;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.5;
+  background: #ffffff;
+  border: none;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+form textarea:focus,
+form input:focus,
+form select:focus {
+  border: none;
+  outline: none;
+  box-shadow: 0 0 5px rgba(37, 43, 37, 0.4);
+  background: #ffffff;
+}
+
+button {
+  background-color: #7388b6;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #3757b1;
+  transform: translateY(-2px);
+}
+
+.success-message {
+  color: #1b5e20;
+  background: #e8f5e9;
+  border-left: 4px solid #1b5e20;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #c62828;
+  background: #ffebee;
+  border-left: 4px solid #c62828;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 90%;
+    padding: 20px 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 15px 20px;
+    margin: 15px auto;
+    border-radius: 6px;
+  }
+
+  .top-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .left-links, .right-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+
+
+/*View Reports */
+h2{
+    color: #6a6cb8;
+    text-align: center;
+    margin-bottom: 15px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 15px;
+    border-radius: 6px;
+}
+
+th {
+    background-color: #2e577d;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fffa;
+}
+
+tr:hover {
+    background-color: #e0f2f1;
+}
+
+/* Status Colors */
+.status {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status.pending { color: #f57f17; }
+.status.resolved { color: #2e7d32; }
+.status.in_progress { color: #0288d1; }
+
+.actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.actions a,
+.actions .link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: white;
+  background-color: #86bbda;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+}
+
+.actions a:hover,
+.actions .link-button:hover {
+  background-color: #7b8abb;
+  transform: translateY(-1px);
+}
+
+/* Make inline form (delete) look like link-style button */
+.actions form { display: inline-block; margin: 0; }
+.actions .link-button.delete { background-color: #e57373; }
+.actions .link-button.delete:hover { background-color: #ef5350; }
+
+.no-data {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .actions a {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}

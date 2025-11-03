@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+/*require_once __DIR__ . '/../vendor/autoload.php';*/
 session_start();
 ?>
 <!DOCTYPE html>
@@ -15,8 +15,11 @@ session_start();
     <section class="hero-section">
         <div class="hero-content">
             <h1>🛡️ Crime Report System</h1>
-            <p>Report crimes securely and anonymously. Your voice matters, your identity stays protected. Help make your community safer today.</p>
-            <a href="login_register.php" class="cta-button">Get Started - Report a Crime</a>
+            <p>Report crimes securely. Your voice matters, your identity stays protected. Help make your community safer today.</p>
+            <div class="cta-buttons">
+                <a href="anonymous_report.php" class="cta-button">Report Anonymously</a>
+                <a href="login_register.php" class="cta-button secondary">Login/Register to Report</a>
+            </div>
         </div>
     </section>
 

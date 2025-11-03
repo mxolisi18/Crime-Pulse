@@ -32,7 +32,7 @@ if (isset($_POST['register'])) {
         header('Location: login_register.php');
         exit;
     }
-    $allowed = ['admin', 'officer'];
+    $allowed = ['admin', 'user'];
     if (!in_array($role, $allowed, true)) {
         $_SESSION['register_error'] = 'Invalid role.';
         $_SESSION['active_form'] = 'register';

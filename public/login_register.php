@@ -41,15 +41,6 @@
 </head>
 <body class="auth-page">
     <div class="container">
-        <!-- Anonymous Reporting Banner -->
-        <div class="anonymous-banner">
-            <div class="anonymous-content">
-                <h3>🔒 Report Anonymously</h3>
-                <p>No account needed. Report crimes instantly without registration.</p>
-                <a href="anonymous_report.php" class="anonymous-btn">Submit Anonymous Report</a>
-            </div>
-        </div>
-
         <!-- Login Form -->
         <div class="form-box <?php echo isActiveForm('login', $activeForm); ?>" id="login-form">
             <form action="login_register_backend.php" method="post">
@@ -61,6 +52,7 @@
                 <input type="password" name="password" placeholder="Enter your password" required>
                 <button type="submit" name="login">Login</button>
                 <p>Don't have an account? <a href="#" onclick="showForm('register-form')">Register</a></p>
+                <p class="anonymous-link">Need to report anonymously? <a href="anonymous_report.php">Click here</a></p>
             </form>
         </div>
 
@@ -77,30 +69,15 @@
                 <select name="role" required>
                     <option value="">--Select Role--</option>
                     <option value="admin">Admin</option>
-                    <option value="officer">Officer</option> 
+                    <option value="user">User</option> 
                 </select>
                 <button type="submit" name="register">Register</button>
                 <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
+                <p class="anonymous-link">Need to report anonymously? <a href="anonymous_report.php">Click here <i class="fas fa-arrow-right"></i></a></p>
             </form>
         </div>
-
-        <!-- Divider -->
-        <div class="divider">
-            <span>OR</span>
-        </div>
-
-        <!-- Why Register Section -->
-        <div class="info-card">
-            <h3>Why Register an Account?</h3>
-            <ul class="benefits-list">
-                <li>✓ Track your report status</li>
-                <li>✓ Receive updates on investigations</li>
-                <li>✓ Submit multiple reports</li>
-                <li>✓ Access your report history</li>
-                <li>✓ Communicate with officers securely</li>
-            </ul>
-        </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="script.js"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@ body.landing-page {
 .form-box {
     width: 100%;
     padding: 20px;
-    max-width: 450px;
+    max-width: 500px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -205,6 +205,20 @@ p a:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     width: 100%;
+}
+
+.container.wide {
+    max-width: 1200px;
+    padding: 30px 40px;
+    background: #eaeaec;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.container.wide .form-box {
+    max-width: 100%;
+    padding: 30px;
+    background: #fff;
 }
 
 .info-card h3 {

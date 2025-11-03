@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+// If user is logged in, they shouldn't use anonymous reporting
+if (isset($_SESSION['user_id'])) {
+    // Clear any existing session first
+    session_unset();
+    session_destroy();
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,10 +15,19 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Anonymous Report - Crime Report System</title>
 </head>
 <body class="auth-page">
-    <div class="container">
+    <div class="container wide">
+        <!-- Why Anonymous Section -->
+        <div class="anonymous-banner">
+            <div class="anonymous-content">
+                <h3>🔒 Anonymous Crime Reporting</h3>
+                <p>Your identity will be completely protected. No registration or personal information required.</p>
+            </div>
+        </div>
+
         <div class="form-box active">
             <form action="submit_anonymous_report.php" method="post">
                 <h2>🔒 Anonymous Crime Report</h2>
@@ -45,8 +62,28 @@ session_start();
                 <textarea name="description" rows="6" placeholder="Describe the incident in detail..." required style="width: 100%; padding: 15px; border: none; background: #eee; border-radius: 6px; font-family: 'Poppins', serif; font-size: 16px; margin-bottom: 20px; resize: vertical;"></textarea>
 
                 <button type="submit" name="submit_anonymous">Submit Anonymous Report</button>
-                <p><a href="login_register.php">← Back to Login</a></p>
+                <div class="form-links">
+                    <p><a href="check_anonymous_report.php"><i class="fas fa-search"></i> Check Report Status</a></p>
+                    <p><a href="login_register.php">← Back to Login</a></p>
+                </div>
             </form>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">
+            <span>Important Information</span>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card">
+            <h3>What You Should Know</h3>
+            <ul class="benefits-list">
+                <li>✓ Your report is completely anonymous</li>
+                <li>✓ No personal information is collected</li>
+                <li>✓ Keep your tracking number safe</li>
+                <li>✓ Check status using tracking number</li>
+                <li>✓ Include as much detail as possible</li>
+            </ul>
         </div>
     </div>
 </body>
