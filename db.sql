@@ -29,7 +29,7 @@ CREATE TABLE `users` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(50) NOT NULL UNIQUE,
     `password_hash` VARCHAR(255) NOT NULL,  -- bcrypt hash
-    `role` ENUM('admin', 'officer') NOT NULL,
+    `role` ENUM('admin', 'user') NOT NULL,
     `mfa_secret` VARCHAR(32),  -- For TOTP
     `is_active` BOOLEAN DEFAULT TRUE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -41,12 +41,13 @@ CREATE TABLE `users` (
 -- Reports: Core entity
 CREATE TABLE `reports` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NULL,
     `crime_type_id` INT NOT NULL,
     `report_date` DATETIME NOT NULL,
     `location` VARCHAR(255),
     `description` TEXT,
     `status` ENUM('pending', 'in_review', 'closed') DEFAULT 'pending',
-    `passphrase_hash` VARCHAR(255) NOT NULL,  -- bcrypt
+    `passphrase_hash` VARCHAR(255) NULL,  -- bcrypt
     `encrypted_data` BLOB,  -- AES-256 for extra sensitive fields
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
