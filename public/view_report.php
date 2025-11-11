@@ -62,6 +62,31 @@ try {
     header("Location: manage_reports.php");
     exit();
 }
+
+//for map display
+$lat = $lon = null;
+if (!empty($report['location'])) {
+    // Use Nominatim server-to-server request
+    $location = urlencode($report['location']);
+    $url = "https://nominatim.openstreetmap.org/search?format=json&q={$location}";
+
+    $opts = [
+        "http" => [
+            "header" => "User-Agent: MyCrimeApp/1.0\r\n"
+        ]
+    ];
+    $context = stream_context_create($opts);
+
+    $json = file_get_contents($url, false, $context);
+    if ($json !== false) {
+        $data = json_decode($json, true);
+        if (!empty($data)) {
+            $lat = $data[0]['lat'];
+            $lon = $data[0]['lon'];
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +97,11 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="user-style.css">
     <link rel="stylesheet" href="style.css">
+
+    <!-- For map display -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 </head>
 <body>
     <!-- Top Header -->
@@ -147,8 +177,8 @@ try {
                 <div class="detail-label">Location</div>
                 <div class="detail-value">
                     <?php echo htmlspecialchars($report['location']); ?>
-                    <?php if ($report['location']): ?>
-                        <div class="map-container" id="map"></div>
+                    <?php if ($lat && $lon): ?>
+                        <div id="map" style="height: 400px;"></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -191,7 +221,7 @@ try {
                 <button type="button" class="btn" onclick="openMessageModal()">
                     <i class="fas fa-comment"></i> Add Note
                 </button>
-                <form method="post" style="display: inline;" 
+                <form method="post" action="manage_reports.php" style="display: inline;" 
                       onsubmit="return confirm('Are you sure you want to delete this report? This action cannot be undone.');">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <input type="hidden" name="action" value="delete">
@@ -281,7 +311,6 @@ try {
         </div>
     </div>
 
-    
 
     <script>
         function openUpdateModal() {
@@ -303,34 +332,20 @@ try {
             }
         }
 
-        <?php if ($report['location']): ?>
-        // Initialize Google Maps
-        function initMap() {
-            const geocoder = new google.maps.Geocoder();
-            const mapDiv = document.getElementById('map');
-            
-            geocoder.geocode({
-                address: '<?php echo addslashes($report['location']); ?>'
-            }, function(results, status) {
-                if (status === 'OK') {
-                    const map = new google.maps.Map(mapDiv, {
-                        zoom: 15,
-                        center: results[0].geometry.location
-                    });
-                    
-                    new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                }
-            });
-        }
-        </script>
-        <?php if ($report['location']): ?>
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-        </script>
-        <?php endif; ?>
+    <?php if ($lat && $lon): ?>
+    const map = L.map('map').setView([<?php echo $lat; ?>, <?php echo $lon; ?>], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>])
+        .addTo(map)
+        .bindPopup('<?php echo addslashes($report['location']); ?>')
+        .openPopup();
     <?php endif; ?>
+
+    </script>
+
 </body>
 </html>

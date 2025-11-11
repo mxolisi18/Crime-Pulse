@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filePath,         // optional file path
             $passphrase_hash   // required passphrase hash
         ]);
+        
 
         $report_id = $pdo->lastInsertId();
 

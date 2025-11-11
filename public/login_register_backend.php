@@ -11,7 +11,8 @@ if (isset($_POST['register'])) {
     $username         = trim($_POST['username'] ?? '');       // changed
     $plainPassword    = $_POST['password'] ?? '';
     $confirmPassword  = $_POST['confirm_password'] ?? '';
-    $role             = $_POST['role'] ?? '';
+    $role             = 'user';  // changed
+    // $role             = $_POST['role'] ?? '';
 
     // ---- validation ----
     if ($username === '' || strlen($username) > 50) {
@@ -32,7 +33,7 @@ if (isset($_POST['register'])) {
         header('Location: login_register.php');
         exit;
     }
-    $allowed = ['admin', 'user'];
+    $allowed = ['user'];
     if (!in_array($role, $allowed, true)) {
         $_SESSION['register_error'] = 'Invalid role.';
         $_SESSION['active_form'] = 'register';

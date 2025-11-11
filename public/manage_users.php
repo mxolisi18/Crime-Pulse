@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $is_active = $action === 'activate' ? 1 : 0;
                     $stmt = $pdo->prepare("UPDATE users SET is_active = ? WHERE id = ? AND role != 'admin'");
                     $stmt->execute([$is_active, $user_id]);
-                    $success = "User " . ($active ? "activated" : "deactivated") . " successfully.";
+                    $success = "User " . ($is_active ? "activated" : "deactivated") . " successfully.";
                     break;
 
                 case 'delete':
@@ -28,6 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute([$user_id]);
                     $success = "User deleted successfully.";
                     break;
+
+                // New Changes //
+                case 'make_admin':
+                    $stmt = $pdo->prepare("UPDATE users SET role = 'admin' WHERE id = ?");
+                    $stmt->execute([$user_id]);
+                    $success = "User promoted to admin successfully.";
+                    break;
+
+                case 'remove_admin':
+                    $stmt = $pdo->prepare("UPDATE users SET role = 'user' WHERE id = ? AND id != ?");
+                    $stmt->execute([$user_id, $_SESSION['user_id']]); 
+                    $success = "Admin role removed successfully.";
+                    break;
+
             }
         } catch (PDOException $e) {
             error_log('Error managing user: ' . $e->getMessage());
@@ -52,14 +66,14 @@ try {
 
     // Fetch users for current page
     $stmt = $pdo->prepare("
-        SELECT id, username, created_at, is_active,
+        SELECT id, username, created_at, is_active, role,
                (SELECT COUNT(*) FROM reports WHERE user_id = users.id) as report_count
         FROM users 
-        WHERE role != 'admin'
+        WHERE id != ?
         ORDER BY created_at DESC
         LIMIT ? OFFSET ?
     ");
-    $stmt->execute([$perPage, $offset]);
+    $stmt->execute([$_SESSION['user_id'], $perPage, $offset]);
     $users = $stmt->fetchAll();
 
 } catch (PDOException $e) {
@@ -113,6 +127,10 @@ try {
                     <th>Joined</th>
                     <th>Reports</th>
                     <th>Status</th>
+
+                    <!-- New Changes -->
+                    <th>Role</th>
+
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -128,9 +146,30 @@ try {
                             <?php echo $user['is_active'] ? 'Active' : 'Inactive'; ?>
                         </span>
                     </td>
+
+                    <!-- New Changes -->
+                    <td><?php echo htmlspecialchars($user['role']); ?></td>
+
                     <td>
                         <form method="post" style="display: inline;">
                             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+
+                            
+                            <!-- New Changes -->
+                            <?php if ($user['role'] === 'user'): ?>
+                            <button type="submit" name="action" value="make_admin"
+                                    class="action-btn btn-activate"
+                                    onclick="return confirm('Make this user an admin?')">
+                                <i class="fas fa-user-shield"></i> Make Admin
+                            </button>
+                            <?php elseif ($user['role'] === 'admin'): ?>
+                            <button type="submit" name="action" value="remove_admin"
+                                    class="action-btn btn-deactivate"
+                                    onclick="return confirm('Remove admin rights from this user?')">
+                                <i class="fas fa-user"></i> Remove Admin
+                            </button>
+                            <?php endif; ?>
+
                             <?php if ($user['is_active']): ?>
                                 <button type="submit" name="action" value="deactivate" 
                                         class="action-btn btn-deactivate" 

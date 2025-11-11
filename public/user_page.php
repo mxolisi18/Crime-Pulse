@@ -82,7 +82,7 @@ try {
 
                 <input type="text" name="location" placeholder="Location of incident" required>
                 <input type="date" name="incident_date" placeholder="Date of incident" required>
-                <input type="file" name="evidence" accept="image/*,video/*" placeholder="Upload evidence (optional)">
+                <input type="file" name="evidence" placeholder="Upload evidence (optional)">
                 <textarea name="description" rows="6" placeholder="Describe the incident in detail..." required style="width: 100%; padding: 15px; border: none; background: #f5fff7; border-radius: 6px; font-family: 'Poppins', serif; font-size: 16px; margin-bottom: 20px; resize: vertical;"></textarea>
                 <button type="submit" name="submit_anonymous">Submit Report</button>
             </form>

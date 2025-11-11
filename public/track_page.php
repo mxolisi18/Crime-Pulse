@@ -17,11 +17,20 @@ if (empty($_SESSION['csrf_token'])) {
 $csrf_token = $_SESSION['csrf_token'];
 
 // Fetch reports joined with crime_type
-$sql = "SELECT r.id, c.name AS crime_type, r.location, r.description, r.report_date, r.status
-        FROM reports r
-        INNER JOIN crime_types c ON r.crime_type_id = c.id
-        WHERE r.user_id = ?
-        ORDER BY r.report_date DESC";
+$sql = $sql = "
+SELECT r.id, c.name AS crime_type, r.location, r.description, r.report_date, r.status,
+       (SELECT m.file_path 
+        FROM media m 
+        WHERE m.report_id = r.id 
+        ORDER BY m.uploaded_at ASC 
+        LIMIT 1) AS file_path
+FROM reports r
+INNER JOIN crime_types c ON r.crime_type_id = c.id
+WHERE r.user_id = ?
+ORDER BY r.report_date DESC
+";
+
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -63,6 +72,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Crime Type</th>
                 <th>Location</th>
                 <th>Description</th>
+                <th>Media</th> <!-- in table header -->
                 <th>Date Reported</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -75,6 +85,16 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($row['crime_type']); ?></td>
                 <td><?= htmlspecialchars($row['location']); ?></td>
                 <td><?= htmlspecialchars($row['description']); ?></td>
+
+            <!--For media display-->
+                <td>
+                    <?php if (!empty($row['file_path'])): ?>
+                        <img src="../uploads/<?= htmlspecialchars($row['file_path']); ?>" alt="Report Media" style="width:100px; height:auto;">
+                    <?php else: ?>
+                        No Evidence Found
+                    <?php endif; ?>
+                </td>
+
                 <td><?= date("d M Y", strtotime($row['report_date'])); ?></td>
                 <td class="status <?= strtolower(str_replace(' ', '_', $row['status'])); ?>">
                     <?= htmlspecialchars($row['status']); ?>
