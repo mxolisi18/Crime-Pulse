@@ -66,13 +66,7 @@
                 <input type="text" name="username" placeholder="Choose a username" required>
                 <input type="password" name="password" placeholder="Enter your password" required>
                 <input type="password" name="confirm_password" placeholder="Confirm your password" required>
-                <!--
-                <select name="role" required>
-                    <option value="">--Select Role--</option>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option> 
-                </select>
-                -->
+
                 <button type="submit" name="register">Register</button>
                 <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
                 <p class="anonymous-link">Need to report anonymously? <a href="anonymous_report.php">Click here <i class="fas fa-arrow-right"></i></a></p>
