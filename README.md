@@ -6,9 +6,9 @@ Basic Crime Reporting Web App
 1. Start XAMPP (Apache)
 2. Terminal:
    cd C:\xampp\htdocs
-   git clone https://github.com/PushkaZA/CrimeReportProject
-   cd CrimeReportProject
+   git clone https://github.com/mxolisi18/Crime-Pulse.git
+   cd Crime-Pulse
    composer install
-3. Visit: http://localhost/GitHub/CrimeReportProject/public/
+3. Visit: http://localhost/Crime-Pulse/public/
 
 DONE! See the red "CRIME REPORT SYSTEM" page!
