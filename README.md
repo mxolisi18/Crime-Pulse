@@ -9,6 +9,6 @@ Basic Crime Reporting Web App
    git clone https://github.com/mxolisi18/Crime-Pulse.git
    cd Crime-Pulse
    composer install
-3. Visit: http://localhost/Crime-Pulse/public/
+3. Visit: http://localhost/GitHub/CrimeReportProject/public/
 
 DONE! See the red "CRIME REPORT SYSTEM" page!
